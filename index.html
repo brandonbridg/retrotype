@@ -1,0 +1,141 @@
+<html><head><base href="." />
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #000000;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  }
+
+  .title-container {
+    position: relative;
+    text-align: center;
+  }
+
+  .title {
+    font-size: 6vw;
+    font-weight: 600;
+    color: #ffffff;
+    letter-spacing: -0.02em;
+    margin: 0;
+    opacity: 0;
+    animation: fadeIn 1.5s ease-out forwards;
+  }
+
+  .gradient-text, .gradient-ai, .gradient-question {
+    background: linear-gradient(270deg, 
+      #FF0080, #FF00FF, #8000FF, #0080FF, #00FFFF, #00FF80, 
+      #80FF00, #FFFF00, #FF8000, #FF0080);
+    background-size: 1000% 1000%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: gradientMove 20s ease infinite;
+    display: inline;
+  }
+
+  @keyframes gradientMove {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .subtitle {
+    font-size: 1.5vw;
+    color: #86868b;
+    margin-top: 10px;
+    font-weight: 400;
+    opacity: 0;
+    animation: fadeIn 1.5s ease-out forwards 0.5s;
+  }
+
+  .subtext {
+    font-size: 1.2vw;
+    color: #86868b;
+    margin-top: 20px;
+    font-weight: 400;
+    opacity: 0;
+    animation: fadeIn 1.5s ease-out forwards 1s;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .gradient-ai {
+    animation: gradientMove 20s ease infinite;
+  }
+
+  .gradient-question {
+    animation: gradientMove 20s ease infinite;
+    font-weight: 500;
+  }
+</style>
+</head>
+<body>
+  <div class="title-container">
+    <h1 class="title">Pear <span class="gradient-text">Intelligence</span></h1>
+    <p class="subtitle" id="changing-text">It's like any other <span class="gradient-ai">AI</span>, but way better.</p>
+    <p class="subtext">We like to mock companies when they try something others are doing better, and fail, and that's a lesson to learn, <span class="gradient-question">Can your apple do that?</span></p>
+  </div>
+
+<script>
+setTimeout(() => {
+  const text = document.getElementById('changing-text');
+  const originalText = text.innerHTML;
+  const newText = `It's a sloppy, dysfunctional, <span class="gradient-ai">AI</span>`;
+  let currentText = originalText;
+  let currentIndex = 0;
+  let isDeleting = true;
+  let tempText = originalText;
+
+  function typeEffect() {
+    if (isDeleting) {
+      tempText = currentText.substring(0, currentIndex);
+      text.innerHTML = tempText;
+      currentIndex--;
+
+      if (currentIndex < 0) {
+        isDeleting = false;
+        currentText = newText;
+        currentIndex = 0;
+      }
+    } else {
+      tempText = currentText.substring(0, currentIndex);
+      text.innerHTML = tempText;
+      currentIndex++;
+
+      if (currentIndex > currentText.length) {
+        return; // Stop the animation
+      }
+    }
+    
+    const speed = isDeleting ? 50 : 100; // Deleting is faster than typing
+    setTimeout(typeEffect, speed);
+  }
+
+  // Start the effect after the fade-in animation (1.5s + 0.5s = 2s)
+  setTimeout(typeEffect, 2000);
+}, 1000); // Wait for the subtext to appear first
+</script>
+</body></html>
